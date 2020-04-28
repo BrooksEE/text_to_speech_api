@@ -29,11 +29,23 @@ await service.availableVoices();
 
 ```dart
 File mp3 = await service.textToSpeech(
-  text: 'Hello World',
+  input: 'Hello World',
   voiceName: 'de-DE-Wavenet-D',
   audioEncoding: 'MP3',
   languageCode: 'de-DE'
 );
 ```
+
+- Convert ssml markup to a File object.
+```dart
+File mp3 = await service.textToSpeech(
+  input: '<speak>Hello World</speak>',
+  useSsml: true,
+  voiceName: 'de-DE-Wavenet-D',
+  audioEncoding: 'MP3',
+  languageCode: 'de-DE'
+);
+```
+
 
 - Utilizing [this audioplayer plugin](https://pub.dartlang.org/packages/audioplayer) you could now play your mp3 file :)

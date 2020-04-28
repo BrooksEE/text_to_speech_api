@@ -71,13 +71,16 @@ class TextToSpeechService {
   }
 
   Future<File> textToSpeech(
-      {@required String text,
+      {@required String input,
+      bool useSsml = false,
       String voiceName = 'de-DE-Wavenet-D',
       String audioEncoding = 'MP3',
       String languageCode = 'de-DE'}) async {
     const endpoint = 'text:synthesize';
+    String inputType = useSsml ? "ssml" : "text";
+    String j = json.encode(input);
     String body =
-        '{"input": {"text":"$text"},"voice": {"languageCode": "$languageCode", "name": "$voiceName"},"audioConfig": {"audioEncoding": "$audioEncoding"}}';
+        '{"input": {"$inputType":$j},"voice": {"languageCode": "$languageCode", "name": "$voiceName"},"audioConfig": {"audioEncoding": "$audioEncoding"}}';
     Future request = http.post(_getApiUrl(endpoint), body: body);
     try {
       var response = await _getResponse(request);
