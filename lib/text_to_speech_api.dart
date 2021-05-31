@@ -64,7 +64,7 @@ class TextToSpeechService {
     const endpoint = 'voices';
     Future request = http.get(_getApiUrl(endpoint));
     try {
-      await _getResponse(request);
+      return await _getResponse(request);
     } catch (e) {
       throw (e);
     }
@@ -73,9 +73,10 @@ class TextToSpeechService {
   Future<File> textToSpeech(
       {@required String input,
       bool useSsml = false,
-      String voiceName = 'de-DE-Wavenet-D',
+      String voiceName = 'en-US-Wavenet-D',
       String audioEncoding = 'MP3',
-      String languageCode = 'de-DE'}) async {
+      String languageCode = 'en-US',
+      }) async {
     const endpoint = 'text:synthesize';
     String inputType = useSsml ? "ssml" : "text";
     String j = json.encode(input);
