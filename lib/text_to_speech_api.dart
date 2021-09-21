@@ -33,7 +33,7 @@ class AudioResponse {
 }
 
 class TextToSpeechService {
-  String _apiKey;
+  String? _apiKey;
 
   TextToSpeechService([this._apiKey]);
 
@@ -60,18 +60,18 @@ class TextToSpeechService {
     });
   }
 
-  Future availableVoices() async {
+  Future<dynamic> availableVoices() async {
     const endpoint = 'voices';
-    Future request = http.get(_getApiUrl(endpoint));
+    var request = http.get(_getApiUrl(endpoint));
     try {
-      return await _getResponse(request);
+      return await _getResponse(request as Future<http.Response>);
     } catch (e) {
       throw (e);
     }
   }
 
   Future<File> textToSpeech(
-      {@required String input,
+      {required String input,
       bool useSsml = false,
       String voiceName = 'en-US-Wavenet-D',
       String audioEncoding = 'MP3',
@@ -84,7 +84,7 @@ class TextToSpeechService {
         '{"input": {"$inputType":$j},"voice": {"languageCode": "$languageCode", "name": "$voiceName"},"audioConfig": {"audioEncoding": "$audioEncoding"}}';
     Future request = http.post(_getApiUrl(endpoint), body: body);
     try {
-      var response = await _getResponse(request);
+      var response = await _getResponse(request as Future<http.Response>);
       AudioResponse audioResponse = AudioResponse.fromJson(response);
       return _createMp3File(audioResponse);
     } catch (e) {
