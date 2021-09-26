@@ -47,7 +47,7 @@ class TextToSpeechService {
   }
 
   _getApiUrl(String endpoint) {
-    return '$BASE_URL$endpoint?key=$_apiKey';
+    return Uri.parse('$BASE_URL$endpoint?key=$_apiKey');
   }
 
   _getResponse(Future<http.Response> request) {
